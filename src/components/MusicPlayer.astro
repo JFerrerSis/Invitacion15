@@ -1,0 +1,125 @@
+---
+import { Play, Pause, Music, Volume2 } from '@lucide/astro';
+---
+
+<section class="py-16 bg-zinc-900 text-white text-center px-6 rounded-[3rem] mx-4 my-10 border border-zinc-800 shadow-2xl relative overflow-hidden group">
+  <div class="absolute -top-24 -left-24 size-64 bg-accent/10 blur-[100px] rounded-full"></div>
+  
+  <div class="relative z-10">
+    <div class="relative inline-block mb-6">
+      <div class="size-20 bg-zinc-800 rounded-full flex items-center justify-center border border-zinc-700 group-hover:scale-110 transition-transform duration-500">
+        <Music class="text-accent size-10 animate-pulse" />
+      </div>
+    </div>
+
+    <h2 class="text-3xl font-display italic mb-2">Melodía de mis 15</h2>
+    <p id="track-name" class="text-zinc-400 text-sm mb-8 font-light tracking-widest uppercase">
+      Cargando track...
+    </p>
+
+    <div class="max-w-xs mx-auto mb-8">
+      <div class="w-full h-1.5 bg-zinc-800 rounded-full mb-4 overflow-hidden cursor-pointer" id="progress-container">
+        <div id="progress-bar" class="h-full bg-accent w-0 transition-all duration-300"></div>
+      </div>
+      
+      <div class="flex justify-between text-[10px] text-zinc-500 font-mono mb-6">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+
+      <button 
+        id="play-button"
+        class="size-16 bg-accent text-white rounded-full flex items-center justify-center mx-auto hover:scale-105 active:scale-95 transition-all shadow-lg shadow-accent/20"
+      >
+        <div id="icon-container">
+          <Play size={32} fill="currentColor" />
+        </div>
+      </button>
+    </div>
+
+    <div class="flex items-center justify-center gap-2 text-zinc-500 text-xs">
+      <Volume2 size={14} />
+      <span>Sube el volumen para disfrutar</span>
+    </div>
+  </div>
+
+  <audio id="main-audio" src="/musica/vals-quince.mp3"></audio>
+</section>
+
+<script>
+  // Usamos '!' al final para decirle a TS: "Confía en mí, este elemento existe"
+  const audio = document.getElementById('main-audio') as HTMLAudioElement;
+  const playBtn = document.getElementById('play-button');
+  const iconContainer = document.getElementById('icon-container');
+  const progressBar = document.getElementById('progress-bar');
+  const progressContainer = document.getElementById('progress-container');
+  const currentTimeTxt = document.getElementById('current-time');
+  const durationTxt = document.getElementById('duration');
+  const trackName = document.getElementById('track-name');
+
+  // 1. Corregimos trackName (usando if para seguridad)
+  if (trackName) {
+    trackName.innerText = "Vals de las Mariposas - Sofía";
+  }
+
+  function togglePlay() {
+    if (!audio) return;
+    
+    if (audio.paused) {
+      audio.play();
+      // 2. Corregimos iconContainer
+      if (iconContainer) {
+        iconContainer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pause"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></svg>';
+      }
+    } else {
+      audio.pause();
+      if (iconContainer) {
+        iconContainer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play"><polygon points="6 3 20 12 6 21 6 3"/></svg>';
+      }
+    }
+  }
+
+  playBtn?.addEventListener('click', togglePlay);
+
+  audio?.addEventListener('timeupdate', () => {
+    const percent = (audio.currentTime / audio.duration) * 100;
+    if (progressBar) {
+      (progressBar as HTMLElement).style.width = `${percent}%`;
+    }
+    
+    const minutes = Math.floor(audio.currentTime / 60);
+    const seconds = Math.floor(audio.currentTime % 60);
+    
+    // 3. Corregimos currentTimeTxt
+    if (currentTimeTxt) {
+      currentTimeTxt.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+  });
+
+  audio?.addEventListener('loadedmetadata', () => {
+    const minutes = Math.floor(audio.duration / 60);
+    const seconds = Math.floor(audio.duration % 60);
+    
+    // 4. Corregimos durationTxt
+    if (durationTxt) {
+      durationTxt.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+  });
+
+  progressContainer?.addEventListener('click', (e) => {
+    const event = e as MouseEvent;
+    if (!audio || !progressContainer) return;
+    
+    const width = (progressContainer as HTMLElement).clientWidth;
+    const clickX = event.offsetX;
+    const duration = audio.duration;
+    audio.currentTime = (clickX / width) * duration;
+  });
+</script>
+
+<style>
+  /* Color de acento personalizado para la invitación */
+  .text-accent { color: #f472b6; } /* Un rosado elegante */
+  .bg-accent { background-color: #f472b6; }
+  .fill-accent\/10 { fill: rgba(244, 114, 182, 0.1); }
+</style>

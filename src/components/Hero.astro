@@ -1,0 +1,29 @@
+---
+import { Heart } from '@lucide/astro';
+---
+<section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+  
+  <div class="absolute inset-0 bg-pink-100/50 z-0">
+    <div class="absolute inset-0 bg-gradient-to-b from-pink-50/20 to-pink-200/40 opacity-70"></div>
+  </div>
+
+  <div class="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 z-10 relative">
+    <p class="uppercase tracking-[0.3em] md:tracking-[0.4em] text-xs md:text-sm text-zinc-600/80">Mis Quince Años</p>
+    
+    <h1 class="text-6xl sm:text-7xl md:text-9xl font-display text-accent italic leading-none">Sofía</h1>
+    
+    <p class="text-lg md:text-xl font-light tracking-widest uppercase text-zinc-700">15 • 10 • 2026</p>
+    
+    <Heart class="mx-auto mt-6 md:mt-8 text-accent/50 fill-accent/15 size-5 md:size-6" />
+  </div>
+</section>
+
+<style>
+  /* Asegura que la fuente 'font-display' esté cargada si la usas */
+  /* Ejem: @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400..900&display=swap'); */
+  
+  .font-display {
+    font-family: 'Playfair Display', serif; /* O tu fuente elegante */
+    font-variant-ligatures: discretionary-ligatures;
+  }
+</style>

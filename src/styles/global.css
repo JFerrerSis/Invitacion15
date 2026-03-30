@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+  --color-accent: #d4af37; /* Dorado */
+}
+
+@layer base {
+  body {
+    @apply bg-[#faf9f6] text-zinc-800 font-body antialiased;
+  }
+}
