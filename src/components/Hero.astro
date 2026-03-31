@@ -2,30 +2,36 @@
 import { Music, ChevronDown } from '@lucide/astro';
 ---
 
-
 <section id="hero-section" class="relative min-h-screen w-full flex flex-col items-center justify-between py-8 md:py-12 overflow-hidden bg-zinc-950">
-  
-  <div class="absolute inset-0 z-0 flex items-center justify-center">
-    <img 
-      id="hero-img"
-      src="/hero.jpeg" 
-      alt="Fondo Hero" 
-      class="h-full w-full object-cover md:object-contain opacity-0 scale-120" 
-    />
-    <div class="absolute inset-0 bg-linear-to-b from-zinc-950/60 via-transparent to-zinc-950/70"></div>
-    <div class="absolute inset-0 bg-purple-900/5 mix-blend-overlay"></div>
-  </div>
+<div class="absolute inset-0 z-0 flex items-center justify-center">
+  <div class="absolute inset-0 bg-zinc-950"></div>
 
-  <div class="z-10 px-6 text-center mt-12 md:mt-20">
-    <p class="hero-element opacity-0 text-xl md:text-2xl text-pink-300/70 mb-2">
+  <img 
+    id="hero-img"
+    src="/hero.jpeg" 
+    alt="Fondo Hero" 
+    class="h-full w-full object-cover md:object-contain md:max-w-5xl lg:max-w-7xl mx-auto opacity-0 scale-110" 
+  />
+  
+  <div class="absolute inset-0 bg-linear-to-b from-zinc-950 via-transparent to-zinc-950 z-10 opacity-95"></div>
+  
+  <div class="absolute inset-0 bg-linear-to-r from-zinc-950 via-transparent to-zinc-950 z-10 opacity-100"></div>
+
+  <div class="absolute inset-0 bg-purple-900/5 mix-blend-overlay z-10"></div>
+  
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(9,9,11,0.7)_100%)] z-10"></div>
+</div>
+
+  <div class="z-20 px-6 text-center mt-12 md:mt-20">
+    <p class="hero-element opacity-0 text-2xl md:text-3xl text-pink-300/70 mb-2">
       Te invito a mis 15 años
     </p>
-    <h1 class="hero-element opacity-0 text-7xl sm:text-8xl md:text-[11rem] gold-text leading-tight py-4">
+    <h1 class="hero-element opacity-0 text-6xl sm:text-6xl md:text-[8rem] gold-text leading-tight py-4 drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]">
       Sofia Parra
     </h1>
   </div>
 
-  <div class="z-10 flex flex-col items-center gap-4 px-6 text-center">
+  <div class="z-20 flex flex-col items-center gap-4 px-6 text-center">
     <div class="hero-element opacity-0">
         <button 
           id="play-button"
@@ -35,14 +41,14 @@ import { Music, ChevronDown } from '@lucide/astro';
           <Music class="size-6 md:size-7 text-pink-100 relative z-20" />
         </button>
     </div>
-    <p id="music-text" class="hero-element opacity-0 text-lg md:text-xl tracking-wide text-purple-200/50 font-light">
+    <p id="music-text" class="hero-element opacity-0 text-lg md:text-2xl tracking-wide text-purple-200/50 font-light">
       Música para tu entrada
     </p>
     <audio id="bg-music" src="/music.mp3" loop></audio>
   </div>
 
-  <div class="hero-element opacity-0 z-10 flex flex-col items-center gap-2 text-pink-200/30 animate-bounce mb-6 md:mb-10">
-    <span class="text-sm tracking-widest ">Desliza</span>
+  <div class="hero-element opacity-0 z-20 flex flex-col items-center gap-2 text-pink-200/30 animate-bounce mb-6 md:mb-10">
+    <span class="text-m tracking-widest ">Desliza</span>
     <ChevronDown class="size-4 md:size-5" />
   </div>
 

@@ -1,52 +1,63 @@
 ---
-import { Sparkles } from '@lucide/astro';
+import { Sparkles } from "@lucide/astro";
 
-const targetDate = "2026-04-30T20:00:00"; 
+const targetDate = "2026-04-30T20:00:00";
 ---
 
-<section class="py-16 md:py-28 px-4 flex flex-col items-center justify-center relative overflow-hidden w-full bg-zinc-50/50">
-  
+<section
+  class="py-16 md:py-28 px-4 flex flex-col items-center justify-center relative overflow-hidden w-full bg-zinc-50/50"
+>
   <div class="absolute inset-0 pointer-events-none -z-10">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 md:w-150 md:h-150 bg-linear-to-tr from-rose-200/40 to-purple-200/40 rounded-full blur-[100px] md:blur-[130px] animate-pulse-slow"></div>
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 md:w-150 md:h-150 bg-linear-to-tr from-rose-200/40 to-purple-200/40 rounded-full blur-[100px] md:blur-[130px] animate-pulse-slow"
+    >
+    </div>
   </div>
 
   <div class="absolute inset-0 pointer-events-none z-0 opacity-60">
-    {[...Array(15)].map((_, i) => (
-      <div 
-        class="absolute w-1 h-1 bg-yellow-400 rounded-full shadow-[0_0_8px_2px_rgba(251,191,36,0.3)] animate-glitter"
-        style={`
+    {
+      [...Array(15)].map((_, i) => (
+        <div
+          class="absolute w-1 h-1 bg-yellow-400 rounded-full shadow-[0_0_8px_2px_rgba(251,191,36,0.3)] animate-glitter"
+          style={`
           top: ${Math.random() * 100}%;
           left: ${Math.random() * 100}%;
           animation-delay: ${Math.random() * 5}s;
           animation-duration: ${4 + Math.random() * 4}s;
         `}
-      />
-    ))}
+        />
+      ))
+    }
   </div>
 
   <div class="flex flex-col items-center gap-3 mb-10 md:mb-16 relative z-10">
     <div class="flex items-center gap-4 text-rose-400/50">
       <Sparkles size={20} class="animate-pulse" />
-      <span class="tracking-[0.5em] text-[10px] md:text-xs font-bold text-zinc-500 text-center ">Cuenta regresiva para la magia</span>
+      <span
+        class="tracking-[0.5em] text-[15px] md:text-xs font-bold text-zinc-500 text-center"
+        >Cuenta regresiva para la magia</span
+      >
       <Sparkles size={20} class="animate-pulse" />
     </div>
-    <div class="h-px w-28 md:w-36 bg-linear-to-r from-transparent via-rose-300/50 to-transparent mt-1"></div>
+    <div
+      class="h-px w-28 md:w-36 bg-linear-to-r from-transparent via-rose-300/50 to-transparent mt-1"
+    >
+    </div>
   </div>
 
   <div class="w-full max-w-5xl mx-auto overflow-hidden px-1">
-    <div 
-      id="countdown" 
-      data-date={targetDate} 
+    <div
+      id="countdown"
+      data-date={targetDate}
       class="relative z-10 flex flex-nowrap items-center justify-center gap-2 sm:gap-6 md:gap-10 p-5 sm:p-10 md:p-16 rounded-3xl md:rounded-[4rem] border border-white bg-white/40 backdrop-blur-xl shadow-[0_20px_50px_rgba(244,114,182,0.1)]"
     >
-      
       <div class="time-block group">
         <span id="days" class="number-medieval">00</span>
         <span class="label-medieval">Días</span>
       </div>
 
       <span class="separator">:</span>
-      
+
       <div class="time-block group" style="animation-delay: 0.1s;">
         <span id="hours" class="number-medieval">00</span>
         <span class="label-medieval">Horas</span>
@@ -61,11 +72,19 @@ const targetDate = "2026-04-30T20:00:00";
 
       <span class="separator text-rose-200/60">:</span>
 
-      <div class="time-block text-rose-400 group" style="animation-delay: 0.3s;">
-        <span id="seconds" class="number-medieval drop-shadow-[0_4px_10px_rgba(251,113,133,0.2)]">00</span>
-        <span class="label-medieval font-bold opacity-80 mt-1 md:mt-2">Segundos</span>
+      <div
+        class="time-block text-rose-400 group"
+        style="animation-delay: 0.3s;"
+      >
+        <span
+          id="seconds"
+          class="number-medieval drop-shadow-[0_4px_10px_rgba(251,113,133,0.2)]"
+          >00</span
+        >
+        <span class="label-medieval font-bold opacity-80 mt-1 md:mt-2"
+          >Segundos</span
+        >
       </div>
-
     </div>
   </div>
 </section>
@@ -74,13 +93,13 @@ const targetDate = "2026-04-30T20:00:00";
   @reference "tailwindcss";
 
   .number-medieval {
-    font-family: 'Anydore', 'Parisienne', cursive;
+    font-family: "Anydore", "Parisienne", cursive;
     font-size: clamp(2.5rem, 8.5vw, 8.5rem);
     @apply text-zinc-800 leading-none block transition-all duration-300 text-center;
   }
 
   .label-medieval {
-    font-size: clamp(0.5rem, 1.2vw, 0.875rem);
+    font-size: clamp(0.75rem, 1.5vw, 1.25rem);
     @apply tracking-[0.15em] md:tracking-[0.3em] text-zinc-400  mt-1 md:mt-2 font-medium;
   }
 
@@ -101,22 +120,44 @@ const targetDate = "2026-04-30T20:00:00";
   }
 
   @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
   }
 
   @keyframes glitter {
-    0%, 100% { opacity: 0; transform: scale(0.5) translateY(0); }
-    25% { opacity: 0.8; transform: scale(1) translateY(-10px); }
-    75% { opacity: 0.5; transform: scale(0.8) translateY(-20px); }
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0.5) translateY(0);
+    }
+    25% {
+      opacity: 0.8;
+      transform: scale(1) translateY(-10px);
+    }
+    75% {
+      opacity: 0.5;
+      transform: scale(0.8) translateY(-20px);
+    }
   }
   .animate-glitter {
     animation: glitter linear infinite;
   }
 
   @keyframes pulse-slow {
-    0%, 100% { opacity: 0.4; transform: scale(1) translate(-50%, -50%); }
-    50% { opacity: 0.7; transform: scale(1.1) translate(-50%, -50%); }
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: scale(1) translate(-50%, -50%);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.1) translate(-50%, -50%);
+    }
   }
   .animate-pulse-slow {
     animation: pulse-slow 10s ease-in-out infinite;
@@ -132,17 +173,18 @@ const targetDate = "2026-04-30T20:00:00";
   import { gsap } from "gsap";
 
   function updateCountdown() {
-    const countdownElement = document.getElementById('countdown');
-    const targetStr = countdownElement?.getAttribute('data-date');
+    const countdownElement = document.getElementById("countdown");
+    const targetStr = countdownElement?.getAttribute("data-date");
     if (!targetStr) return;
-    
+
     const target = new Date(targetStr).getTime();
     const now = new Date().getTime();
     const diff = target - now;
 
     if (diff <= 0) {
       if (countdownElement) {
-        countdownElement.innerHTML = "<p class='text-4xl md:text-7xl font-anydore text-rose-400 animate-pulse text-center'>¡Llegó la magia!</p>";
+        countdownElement.innerHTML =
+          "<p class='text-4xl md:text-7xl font-anydore text-rose-400 animate-pulse text-center'>¡Llegó la magia!</p>";
       }
       return;
     }
@@ -151,18 +193,23 @@ const targetDate = "2026-04-30T20:00:00";
       days: Math.floor(diff / (1000 * 60 * 60 * 24)),
       hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
       minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-      seconds: Math.floor((diff % (1000 * 60)) / 1000)
+      seconds: Math.floor((diff % (1000 * 60)) / 1000),
     };
 
     Object.entries(units).forEach(([id, value]) => {
       const el = document.getElementById(id);
       if (el) {
-        const newVal = value.toString().padStart(2, '0');
+        const newVal = value.toString().padStart(2, "0");
         if (el.innerText !== newVal) {
           // Animación de brillo rosa/dorado al cambiar
-          gsap.fromTo(el, 
-            { opacity: 0.5, color: "#fbcfe8" }, 
-            { opacity: 1, color: el.id === 'seconds' ? "#fb7185" : "#27272a", duration: 0.5 }
+          gsap.fromTo(
+            el,
+            { opacity: 0.5, color: "#fbcfe8" },
+            {
+              opacity: 1,
+              color: el.id === "seconds" ? "#fb7185" : "#27272a",
+              duration: 0.5,
+            },
           );
           el.innerText = newVal;
         }
