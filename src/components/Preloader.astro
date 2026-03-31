@@ -1,0 +1,71 @@
+---
+/* src/components/Preloader.astro */
+---
+<div id="preloader" class="fixed inset-0 z-100 flex flex-col items-center justify-center bg-zinc-950 px-6">
+  <div class="relative flex flex-col items-center w-full max-w-4xl">
+    
+    <div class="overflow-hidden mb-8 text-center z-10">
+      <p id="preloader-text" class="text-3xl md:text-5xl text-pink-100 font-parisienne opacity-0 tracking-widest translate-y-full">
+        Los 15 de Sofía
+      </p>
+      <span id="loading-sub" class="block text-[10px] md:text-xs  tracking-[0.8em] text-pink-200/40 mt-4 opacity-0">
+        Comienza la aventura
+      </span>
+    </div>
+
+    <div class="relative w-full max-w-lg aspect-square flex items-center justify-center">
+      <img 
+        id="castle-png"
+        src="/castillo.png" 
+        alt="Castillo" 
+        class="w-full h-full object-contain opacity-0 scale-90" 
+      />
+      <div id="castle-glow" class="absolute inset-0 bg-white/5 rounded-full blur-[100px] opacity-0 scale-50"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+
+  const startLoader = () => {
+    const preloader = document.getElementById('preloader');
+    const castle = document.getElementById('castle-png');
+    const title = document.getElementById('preloader-text');
+    const subtitle = document.getElementById('loading-sub');
+    const html = document.documentElement;
+
+    if (!preloader) return;
+
+    // BLOQUEO INICIAL
+    html.style.overflow = 'hidden';
+    window.scrollTo(0, 0); // Forzar arriba al recargar
+
+    const tl = gsap.timeline();
+
+    tl.to(title, { opacity: 1, y: 0, duration: 1.2, ease: "power4.out" });
+    tl.to(subtitle, { opacity: 1, duration: 1 }, "-=0.8");
+    
+    tl.to(castle, { 
+      opacity: 1, 
+      scale: 1, 
+      duration: 2, 
+      ease: "power2.out" 
+    }, "-=1.2");
+
+    tl.to(preloader, {
+      opacity: 0,
+      duration: 1,
+      delay: 1,
+      onComplete: () => {
+        preloader.style.display = 'none';
+        html.style.overflow = ''; // LIBERAR SCROLL GLOBAL
+        window.dispatchEvent(new Event('preloaderFinished'));
+      }
+    });
+  };
+
+  // Ejecutar tanto en carga inicial como en transiciones de Astro
+  window.addEventListener('load', startLoader);
+  document.addEventListener('astro:page-load', startLoader);
+</script>

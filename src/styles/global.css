@@ -1,13 +1,59 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Playfair Display", serif;
-  --font-body: "Inter", sans-serif;
-  --color-accent: #d4af37; /* Dorado */
+  /* Definimos Parisienne como la fuente principal */
+  --font-parisienne: "Parisienne", cursive;
+  
+  /* Colores de marca */
+  --color-pastel-pink: #ffd1dc;
+  --color-pastel-purple: #e2d1f9;
+  --color-gold-accent: #d4af37;
 }
 
 @layer base {
-  body {
-    @apply bg-[#faf9f6] text-zinc-800 font-body antialiased;
+  /* 1. RESET GLOBAL PARA EVITAR SCROLL HORIZONTAL */
+  html {
+    @apply antialiased;
+    overflow-x: hidden;
+    width: 100%;
+    /* Evita saltos visuales en móviles con barras de scroll */
+    scrollbar-gutter: stable; 
   }
+
+  body {
+    @apply bg-transparent text-zinc-700;
+    font-family: var(--font-parisienne);
+    font-size: 1.25rem; 
+    line-height: 1.6;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 2. HERENCIA DE FUENTE FORZADA */
+  *, *::before, *::after {
+    font-family: var(--font-parisienne) !important;
+    /* Asegura que los paddings no sumen al ancho total */
+    box-sizing: border-box; 
+  }
+
+  h1, h2, h3, h4, h5, h6, button, input, textarea, select {
+    font-family: var(--font-parisienne) !important;
+  }
+}
+
+/* 3. UTILIDADES PERSONALIZADAS */
+@utility gold-gradient-text {
+  background: linear-gradient(to bottom, #fff9c4, #fde047, #d4af37, #ca8a04, #854d0e);
+  background-clip : text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block; /* Necesario para que el gradiente se aplique bien */
+}
+
+/* Utilidad para secciones que podrían causar desborde por animaciones GSAP */
+@utility section-safe {
+  @apply relative w-full overflow-hidden;
 }

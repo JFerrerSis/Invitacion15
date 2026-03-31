@@ -1,31 +1,68 @@
-<section class="relative py-16 px-6 overflow-hidden w-full dedication-bg text-center">
-
+<section class="relative py-20 px-6 overflow-hidden w-full text-center">
   
-  <p class="text-zinc-950 text-base md:text-lg leading-relaxed tracking-wide px-4 mb-6 max-w-2xl mx-auto">
-    "Parece que fue ayer cuando los juegos y las risas llenaban cada rincón, y hoy, casi sin darme cuenta, me encuentro frente al inicio de una nueva y hermosa etapa.
-  </p>
+  <div class="max-w-3xl mx-auto relative z-10">
+    
+    <div class="mb-12 flex flex-col items-center gap-2 opacity-30">
+      <div class="w-px h-16 bg-zinc-800"></div>
+      <div class="w-2 h-2 rounded-full border border-zinc-800"></div>
+    </div>
 
-  <p class="text-zinc-950 text-base md:text-lg leading-relaxed tracking-wide px-4 mb-6 max-w-2xl mx-auto">
-    Quiero que seas parte del día en que mis sueños de niña comienzan a pintarse con los colores de la juventud.
-  </p>
+    <div class="mb-16">
+      <p class="text-zinc-800 text-2xl md:text-3xl leading-relaxed px-4 italic">
+        "Parece que fue ayer cuando los juegos y las risas llenaban cada rincón, y hoy, casi sin darme cuenta, me encuentro frente al inicio de una nueva y hermosa etapa. Quiero que seas parte del día en que mis sueños de niña comienzan a pintarse con los colores de la juventud. No sería lo mismo sin tu presencia, porque has sido parte de mi historia."
+      </p>
+    </div>
 
-  <p class="text-zinc-950 text-base md:text-lg leading-relaxed tracking-wide px-4 max-w-2xl mx-auto">
-    No sería lo mismo sin tu presencia, porque has sido parte de mi historia."
-  </p>
+    <div class="space-y-6 mb-20">
+      <p class="text-zinc-800 text-2xl md:text-3xl leading-relaxed px-4">
+        "En las páginas de mi vida, ustedes son los protagonistas de los capítulos más bellos. Gracias, papás <span class="font-bold text-zinc-900">Hugo Parra</span> y <span class="font-bold text-zinc-900">Sorelis Villasmil</span>, por dedicar cada día a cuidar mi camino y por esforzarse tanto para que hoy mi realidad supere a cualquier fantasía."
+      </p>
+      
+      <p class="text-zinc-800 text-2xl md:text-3xl leading-relaxed px-4">
+        "Gracias por hacerme sentir la princesa de este cuento que hoy celebramos con toda el alma."
+      </p>
+    </div>
 
-  <div class="mt-16 flex justify-center gap-3">
-    <div class="w-1.5 h-1.5 rounded-full bg-zinc-950/10"></div>
-    <div class="w-1.5 h-1.5 rounded-full bg-zinc-950/10"></div>
-    <div class="w-1.5 h-1.5 rounded-full bg-zinc-950/10"></div>
+    <div class="flex flex-col items-center justify-center gap-2 py-8 border-y border-zinc-800/10">
+      <span class="gold-text-small text-3xl md:text-4xl">Niños dulces sueños</span>
+      <p class="text-zinc-500 text-xs tracking-[0.3em]  mt-2">
+        Agradecemos tu comprensión
+      </p>
+    </div>
+
+    <div class="mt-20 flex justify-center gap-4 opacity-20">
+      {[...Array(3)].map((_) => (
+        <div class="w-1.5 h-1.5 rotate-45 bg-zinc-900"></div>
+      ))}
+    </div>
+  </div>
+
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none -z-10">
+     <svg viewBox="0 0 100 100" class="w-125 h-125 fill-current text-zinc-900">
+        <path d="M10 90 L10 40 L30 20 L50 40 L70 20 L90 40 L90 90 Z" />
+     </svg>
   </div>
 
 </section>
 
 <style>
-  .dedication-bg {
-    /* Degradado lila a rosado pastel aplicado a toda la sección */
-    
-    /* Fuente sans-serif unificada */
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Clase para el dorado pequeño (notificaciones) */
+  .gold-text-small {
+    background: linear-gradient(
+      to bottom,
+      #fff9c4 0%,
+      #fde047 25%,
+      #d4af37 50%,
+      #ca8a04 75%,
+      #854d0e 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  .font-bold {
+    /* Resalte suave para nombres */
+    text-shadow: 0.3px 0px 0px rgba(0,0,0,0.1);
   }
 </style>

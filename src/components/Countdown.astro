@@ -1,54 +1,136 @@
 ---
-import { Timer } from '@lucide/astro';
+import { Sparkles } from '@lucide/astro';
 
-// Fecha: 30 de abril de 2026
 const targetDate = "2026-04-30T20:00:00"; 
 ---
 
-<section class="py-10 md:py-20 px-2 flex flex-col items-center justify-center relative overflow-hidden w-full">
+<section class="py-16 md:py-28 px-4 flex flex-col items-center justify-center relative overflow-hidden w-full bg-zinc-50/50">
   
   <div class="absolute inset-0 pointer-events-none -z-10">
-    <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-rose-300/10 rounded-full blur-[80px] md:blur-[100px]"></div>
-    <div class="absolute top-1/2 right-1/4 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-lila-300/10 rounded-full blur-[80px] md:blur-[100px]"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 md:w-150 md:h-150 bg-linear-to-tr from-rose-200/40 to-purple-200/40 rounded-full blur-[100px] md:blur-[130px] animate-pulse-slow"></div>
   </div>
 
-  <div class="flex items-center gap-2 mb-6 md:mb-10 text-rose-300/60 relative z-10">
-    <Timer size={14} class="animate-spin-slow-timer" />
-    <span class="uppercase tracking-[0.4em] text-[8px] md:text-[9px] font-bold">Faltan</span>
+  <div class="absolute inset-0 pointer-events-none z-0 opacity-60">
+    {[...Array(15)].map((_, i) => (
+      <div 
+        class="absolute w-1 h-1 bg-yellow-400 rounded-full shadow-[0_0_8px_2px_rgba(251,191,36,0.3)] animate-glitter"
+        style={`
+          top: ${Math.random() * 100}%;
+          left: ${Math.random() * 100}%;
+          animation-delay: ${Math.random() * 5}s;
+          animation-duration: ${4 + Math.random() * 4}s;
+        `}
+      />
+    ))}
   </div>
 
-  <div id="countdown" data-date={targetDate} class="flex gap-2 sm:gap-4 md:gap-10 justify-center items-center relative z-10 w-full max-w-5xl">
-    
-    <div class="flex flex-col items-center flex-1">
-      <span id="days" class="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-anydore text-zinc-950 leading-none">00</span>
-      <span class="text-[7px] md:text-[10px] uppercase tracking-[0.2em] text-zinc-950/30 mt-2 font-bold">Días</span>
+  <div class="flex flex-col items-center gap-3 mb-10 md:mb-16 relative z-10">
+    <div class="flex items-center gap-4 text-rose-400/50">
+      <Sparkles size={20} class="animate-pulse" />
+      <span class="tracking-[0.5em] text-[10px] md:text-xs font-bold text-zinc-500 text-center ">Cuenta regresiva para la magia</span>
+      <Sparkles size={20} class="animate-pulse" />
     </div>
+    <div class="h-px w-28 md:w-36 bg-linear-to-r from-transparent via-rose-300/50 to-transparent mt-1"></div>
+  </div>
 
-    <span class="text-xl md:text-5xl text-zinc-950/10 mb-6 md:mb-10 font-light">:</span>
-    
-    <div class="flex flex-col items-center flex-1">
-      <span id="hours" class="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-anydore text-zinc-950 leading-none">00</span>
-      <span class="text-[7px] md:text-[10px] uppercase tracking-[0.2em] text-zinc-950/30 mt-2 font-bold">Horas</span>
+  <div class="w-full max-w-5xl mx-auto overflow-hidden px-1">
+    <div 
+      id="countdown" 
+      data-date={targetDate} 
+      class="relative z-10 flex flex-nowrap items-center justify-center gap-2 sm:gap-6 md:gap-10 p-5 sm:p-10 md:p-16 rounded-3xl md:rounded-[4rem] border border-white bg-white/40 backdrop-blur-xl shadow-[0_20px_50px_rgba(244,114,182,0.1)]"
+    >
+      
+      <div class="time-block group">
+        <span id="days" class="number-medieval">00</span>
+        <span class="label-medieval">Días</span>
+      </div>
+
+      <span class="separator">:</span>
+      
+      <div class="time-block group" style="animation-delay: 0.1s;">
+        <span id="hours" class="number-medieval">00</span>
+        <span class="label-medieval">Horas</span>
+      </div>
+
+      <span class="separator">:</span>
+
+      <div class="time-block group" style="animation-delay: 0.2s;">
+        <span id="minutes" class="number-medieval">00</span>
+        <span class="label-medieval">Minutos</span>
+      </div>
+
+      <span class="separator text-rose-200/60">:</span>
+
+      <div class="time-block text-rose-400 group" style="animation-delay: 0.3s;">
+        <span id="seconds" class="number-medieval drop-shadow-[0_4px_10px_rgba(251,113,133,0.2)]">00</span>
+        <span class="label-medieval font-bold opacity-80 mt-1 md:mt-2">Segundos</span>
+      </div>
+
     </div>
-
-    <span class="text-xl md:text-5xl text-zinc-950/10 mb-6 md:mb-10 font-light">:</span>
-
-    <div class="flex flex-col items-center flex-1">
-      <span id="minutes" class="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-anydore text-zinc-950 leading-none">00</span>
-      <span class="text-[7px] md:text-[10px] uppercase tracking-[0.2em] text-zinc-950/30 mt-2 font-bold">Minutos</span>
-    </div>
-
-    <span class="text-xl md:text-5xl text-zinc-950/10 mb-6 md:mb-10 font-light">:</span>
-
-    <div class="flex flex-col items-center flex-1">
-      <span id="seconds" class="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-anydore text-zinc-950 leading-none">00</span>
-      <span class="text-[7px] md:text-[10px] uppercase tracking-[0.2em] text-rose-400/60 mt-2 font-bold">Segundos</span>
-    </div>
-
   </div>
 </section>
 
+<style>
+  @reference "tailwindcss";
+
+  .number-medieval {
+    font-family: 'Anydore', 'Parisienne', cursive;
+    font-size: clamp(2.5rem, 8.5vw, 8.5rem);
+    @apply text-zinc-800 leading-none block transition-all duration-300 text-center;
+  }
+
+  .label-medieval {
+    font-size: clamp(0.5rem, 1.2vw, 0.875rem);
+    @apply tracking-[0.15em] md:tracking-[0.3em] text-zinc-400  mt-1 md:mt-2 font-medium;
+  }
+
+  .time-block {
+    @apply flex flex-col items-center justify-center flex-1 min-w-15 md:min-w-30;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Brillo dorado sutil al pasar el mouse */
+  .time-block:hover .number-medieval {
+    @apply text-rose-400;
+    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.4));
+  }
+
+  .separator {
+    font-size: clamp(1.8rem, 5.5vw, 4.5rem);
+    @apply text-rose-100 font-serif mb-8 md:mb-12 self-center;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes glitter {
+    0%, 100% { opacity: 0; transform: scale(0.5) translateY(0); }
+    25% { opacity: 0.8; transform: scale(1) translateY(-10px); }
+    75% { opacity: 0.5; transform: scale(0.8) translateY(-20px); }
+  }
+  .animate-glitter {
+    animation: glitter linear infinite;
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.4; transform: scale(1) translate(-50%, -50%); }
+    50% { opacity: 0.7; transform: scale(1.1) translate(-50%, -50%); }
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 10s ease-in-out infinite;
+  }
+
+  #countdown span[id] {
+    display: inline-block;
+    min-width: 1.5ch;
+  }
+</style>
+
 <script>
+  import { gsap } from "gsap";
+
   function updateCountdown() {
     const countdownElement = document.getElementById('countdown');
     const targetStr = countdownElement?.getAttribute('data-date');
@@ -60,49 +142,34 @@ const targetDate = "2026-04-30T20:00:00";
 
     if (diff <= 0) {
       if (countdownElement) {
-        countdownElement.innerHTML = "<p class='text-3xl md:text-5xl font-anydore text-zinc-950 animate-pulse text-center'>¡Llegó el momento!</p>";
+        countdownElement.innerHTML = "<p class='text-4xl md:text-7xl font-anydore text-rose-400 animate-pulse text-center'>¡Llegó la magia!</p>";
       }
       return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    const units = {
+      days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+      minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+      seconds: Math.floor((diff % (1000 * 60)) / 1000)
+    };
 
-    const d = document.getElementById('days');
-    const h = document.getElementById('hours');
-    const m = document.getElementById('minutes');
-    const s = document.getElementById('seconds');
-
-    if (d) d.innerText = days.toString().padStart(2, '0');
-    if (h) h.innerText = hours.toString().padStart(2, '0');
-    if (m) m.innerText = minutes.toString().padStart(2, '0');
-    if (s) s.innerText = seconds.toString().padStart(2, '0');
+    Object.entries(units).forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const newVal = value.toString().padStart(2, '0');
+        if (el.innerText !== newVal) {
+          // Animación de brillo rosa/dorado al cambiar
+          gsap.fromTo(el, 
+            { opacity: 0.5, color: "#fbcfe8" }, 
+            { opacity: 1, color: el.id === 'seconds' ? "#fb7185" : "#27272a", duration: 0.5 }
+          );
+          el.innerText = newVal;
+        }
+      }
+    });
   }
 
   setInterval(updateCountdown, 1000);
   updateCountdown();
 </script>
-
-<style>
-  .font-anydore {
-    font-family: 'Anydore', cursive;
-  }
-
-  @keyframes spin-slow-timer {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  .animate-spin-slow-timer {
-    animation: spin-slow-timer 15s linear infinite;
-  }
-
-  /* Control estricto de los números */
-  #countdown span[id] {
-    display: inline-block;
-    min-width: 1.1ch;
-    text-align: center;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
-  }
-</style>
