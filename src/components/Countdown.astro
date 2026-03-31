@@ -1,62 +1,75 @@
 ---
 import { Timer } from '@lucide/astro';
 
-// Define la fecha aquí para que sea fácil de cambiar
-const targetDate = "2026-10-15T20:00:00"; 
+// Fecha: 30 de abril de 2026
+const targetDate = "2026-04-30T20:00:00"; 
 ---
 
-<section class="py-12 px-6 flex flex-col items-center justify-center bg-accent/5 rounded-3xl mx-4 my-20 border border-accent/10">
-  <div class="flex items-center gap-2 mb-8 text-accent">
-    <Timer size={20} />
-    <span class="uppercase tracking-[0.2em] text-xs font-medium">Faltan pocos días</span>
+<section class="py-10 md:py-20 px-2 flex flex-col items-center justify-center relative overflow-hidden w-full">
+  
+  <div class="absolute inset-0 pointer-events-none -z-10">
+    <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-rose-300/10 rounded-full blur-[80px] md:blur-[100px]"></div>
+    <div class="absolute top-1/2 right-1/4 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-lila-300/10 rounded-full blur-[80px] md:blur-[100px]"></div>
   </div>
 
-  <div id="countdown" data-date={targetDate} class="flex gap-4 md:gap-8 justify-center items-center">
-    <div class="flex flex-col items-center">
-      <span id="days" class="text-4xl md:text-6xl font-display italic text-zinc-800">00</span>
-      <span class="text-[10px] uppercase tracking-widest text-zinc-400 mt-2">Días</span>
-    </div>
-    <span class="text-2xl text-accent/30 self-start mt-2">:</span>
+  <div class="flex items-center gap-2 mb-6 md:mb-10 text-rose-300/60 relative z-10">
+    <Timer size={14} class="animate-spin-slow-timer" />
+    <span class="uppercase tracking-[0.4em] text-[8px] md:text-[9px] font-bold">Faltan</span>
+  </div>
+
+  <div id="countdown" data-date={targetDate} class="flex gap-2 sm:gap-4 md:gap-10 justify-center items-center relative z-10 w-full max-w-5xl">
     
-    <div class="flex flex-col items-center">
-      <span id="hours" class="text-4xl md:text-6xl font-display italic text-zinc-800">00</span>
-      <span class="text-[10px] uppercase tracking-widest text-zinc-400 mt-2">Horas</span>
+    <div class="flex flex-col items-center flex-1">
+      <span id="days" class="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-anydore text-zinc-950 leading-none">00</span>
+      <span class="text-[7px] md:text-[10px] uppercase tracking-[0.2em] text-zinc-950/30 mt-2 font-bold">Días</span>
     </div>
-    <span class="text-2xl text-accent/30 self-start mt-2">:</span>
 
-    <div class="flex flex-col items-center">
-      <span id="minutes" class="text-4xl md:text-6xl font-display italic text-zinc-800">00</span>
-      <span class="text-[10px] uppercase tracking-widest text-zinc-400 mt-2">Min</span>
+    <span class="text-xl md:text-5xl text-zinc-950/10 mb-6 md:mb-10 font-light">:</span>
+    
+    <div class="flex flex-col items-center flex-1">
+      <span id="hours" class="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-anydore text-zinc-950 leading-none">00</span>
+      <span class="text-[7px] md:text-[10px] uppercase tracking-[0.2em] text-zinc-950/30 mt-2 font-bold">Horas</span>
     </div>
-    <span class="text-2xl text-accent/30 self-start mt-2">:</span>
 
-    <div class="flex flex-col items-center">
-      <span id="seconds" class="text-4xl md:text-6xl font-display italic text-accent">00</span>
-      <span class="text-[10px] uppercase tracking-widest text-zinc-400 mt-2">Seg</span>
+    <span class="text-xl md:text-5xl text-zinc-950/10 mb-6 md:mb-10 font-light">:</span>
+
+    <div class="flex flex-col items-center flex-1">
+      <span id="minutes" class="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-anydore text-zinc-950 leading-none">00</span>
+      <span class="text-[7px] md:text-[10px] uppercase tracking-[0.2em] text-zinc-950/30 mt-2 font-bold">Minutos</span>
     </div>
+
+    <span class="text-xl md:text-5xl text-zinc-950/10 mb-6 md:mb-10 font-light">:</span>
+
+    <div class="flex flex-col items-center flex-1">
+      <span id="seconds" class="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-anydore text-zinc-950 leading-none">00</span>
+      <span class="text-[7px] md:text-[10px] uppercase tracking-[0.2em] text-rose-400/60 mt-2 font-bold">Segundos</span>
+    </div>
+
   </div>
 </section>
 
 <script>
   function updateCountdown() {
     const countdownElement = document.getElementById('countdown');
-    const target = new Date(countdownElement?.dataset.date || "").getTime();
+    const targetStr = countdownElement?.getAttribute('data-date');
+    if (!targetStr) return;
     
+    const target = new Date(targetStr).getTime();
     const now = new Date().getTime();
     const diff = target - now;
 
     if (diff <= 0) {
-      if (countdownElement) countdownElement.innerHTML = "<p class='text-2xl font-display italic text-accent'>¡Hoy es el gran día!</p>";
+      if (countdownElement) {
+        countdownElement.innerHTML = "<p class='text-3xl md:text-5xl font-anydore text-zinc-950 animate-pulse text-center'>¡Llegó el momento!</p>";
+      }
       return;
     }
 
-    // Cálculos de tiempo
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    // Actualizar el DOM con formato de dos dígitos
     const d = document.getElementById('days');
     const h = document.getElementById('hours');
     const m = document.getElementById('minutes');
@@ -68,8 +81,28 @@ const targetDate = "2026-10-15T20:00:00";
     if (s) s.innerText = seconds.toString().padStart(2, '0');
   }
 
-  // Ejecutar cada segundo
   setInterval(updateCountdown, 1000);
-  // Ejecutar inmediatamente al cargar
   updateCountdown();
 </script>
+
+<style>
+  .font-anydore {
+    font-family: 'Anydore', cursive;
+  }
+
+  @keyframes spin-slow-timer {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin-slow-timer {
+    animation: spin-slow-timer 15s linear infinite;
+  }
+
+  /* Control estricto de los números */
+  #countdown span[id] {
+    display: inline-block;
+    min-width: 1.1ch;
+    text-align: center;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+  }
+</style>

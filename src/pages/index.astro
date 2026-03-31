@@ -4,55 +4,69 @@ import Hero from "../components/Hero.astro";
 import Map from "../components/Map.astro";
 import MusicPlayer from "../components/MusicPlayer.astro";
 import Countdown from "../components/Countdown.astro";
+import Dedication from '../components/Dedication.astro';
 import { MessageCircle } from "@lucide/astro";
 
 const datosEvento = {
   nombre: "Sofía Valentina",
   direccion: "Salón de Eventos 'La Mansión', Calle Real #123",
-  // Ejemplo de link de Google Maps (debes sacar el tuyo en "Compartir > Insertar Mapa")
-  mapaLink: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.1234!2d-67.1234!3d10.1234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDA3JzM0LjIiTiA2N8KwMDcnMzQuMiJX!5e0!3m2!1ses!2sve!4v1710000000000",
-  whatsapp: "5491122334455", // Reemplaza con tu número (código de país + número)
+  mapaLink: "https://maps.app.goo.gl/9SkZnjy76xCRgPqx6?g_st=iw",
+  whatsapp: "5491122334455", 
 };
 
 const mensajeConfirmacion = encodeURIComponent(`¡Hola! Confirmo mi asistencia a los 15 de ${datosEvento.nombre.split(" ")[0]}.`);
 ---
 
 <Layout title={`Invitación de 15 - ${datosEvento.nombre}`}>
-  <Hero />
-
-  <div class="max-w-xl mx-auto px-4">
-    <Countdown />
-  </div>
-
-  <div class="max-w-xl mx-auto border-t border-zinc-200 my-10"></div>
-
-  <Map address={datosEvento.direccion} mapUrl={datosEvento.mapaLink} />
-
-  <MusicPlayer />
-
-  <section class="py-20 px-6 text-center space-y-8 animate-fade-in">
-    <h2 class="font-display text-4xl italic text-zinc-800">¿Contamos contigo?</h2>
-    <p class="text-zinc-500 max-w-xs mx-auto font-light">
-      Por favor, confirma tu asistencia antes del 1 de Octubre para esperarte con alegría.
-    </p>
+  <main class="min-h-screen bg-global-gradient">
     
-    <a 
-      href={`https://wa.me/${datosEvento.whatsapp}?text=${mensajeConfirmacion}`}
-      target="_blank"
-      class="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-4 rounded-full hover:shadow-xl hover:shadow-green-200 transition-all duration-300 font-medium transform hover:-translate-y-1"
-    >
-      <MessageCircle size={22} />
-      Confirmar por WhatsApp
-    </a>
-  </section>
+    <Hero />
 
-  <footer class="py-20 text-center opacity-40 italic font-light text-sm">
-    <p>Hecho con amor para {datosEvento.nombre.split(" ")[0]}</p>
-    <p class="mt-2 uppercase tracking-widest text-[10px]">2026</p>
-  </footer>
+    <div class="max-w-2xl mx-auto px-4">
+      <Dedication />
+    </div>
+
+    <div class="max-w-xl mx-auto px-4 mt-[-2rem]">
+      <Countdown />
+    </div>
+
+    <div class="max-w-xl mx-auto border-t border-zinc-950/5 my-10"></div>
+
+    <Map address={datosEvento.direccion} mapUrl={datosEvento.mapaLink} />
+
+    <MusicPlayer />
+
+    <section class="py-20 px-6 text-center space-y-8 animate-fade-in">
+      <h2 class="font-display text-4xl italic text-zinc-950">¿Contamos contigo?</h2>
+      <p class="text-zinc-950/60 max-w-xs mx-auto font-light">
+        Por favor, confirma tu asistencia antes del 1 de Octubre para esperarte con alegría.
+      </p>
+      
+      <a 
+        href={`https://wa.me/${datosEvento.whatsapp}?text=${mensajeConfirmacion}`}
+        target="_blank"
+        class="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-4 rounded-full hover:shadow-xl hover:shadow-green-200 transition-all duration-300 font-medium transform hover:-translate-y-1"
+      >
+        <MessageCircle size={22} />
+        Confirmar por WhatsApp
+      </a>
+    </section>
+
+    <footer class="py-20 text-center opacity-40 italic font-light text-sm text-zinc-950">
+      <p>Hecho con amor para {datosEvento.nombre.split(" ")[0]}</p>
+      <p class="mt-2 uppercase tracking-widest text-[10px]">2026</p>
+    </footer>
+
+  </main>
 </Layout>
 
 <style>
+  /* Degradado lila y rosado pastel para todo el fondo */
+  .bg-global-gradient {
+    background: linear-gradient(180deg, #f3e8ff 0%, #fce7f3 50%, #f3e8ff 100%);
+    background-attachment: fixed; /* Mantiene el fondo fijo mientras haces scroll */
+  }
+
   /* Animación suave al hacer scroll */
   .animate-fade-in {
     view-timeline-name: --section;

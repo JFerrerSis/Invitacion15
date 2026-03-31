@@ -1,29 +1,191 @@
 ---
-import { Heart } from '@lucide/astro';
+import { Music, ChevronDown } from '@lucide/astro';
 ---
-<section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+
+<div id="preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-zinc-950 transition-opacity duration-1000">
+  <div class="relative flex flex-col items-center">
+    
+    <div class="relative w-40 h-40 flex items-center justify-center">
+      <span class="text-8xl font-anydore text-rose-100/90 drop-shadow-[0_0_20px_rgba(251,207,232,0.8)] z-10 animate-pulse">
+        15
+      </span>
+      
+      <div class="absolute inset-0 animate-spin-slow">
+        {[...Array(12)].map((_, i) => (
+          <div 
+            class="absolute w-1 h-1 rounded-full bg-white shadow-[0_0_8px_#fff]"
+            style={`
+              top: ${50 + 45 * Math.sin(i * Math.PI / 6)}%;
+              left: ${50 + 45 * Math.cos(i * Math.PI / 6)}%;
+              animation: sparkle-float 2s infinite ${i * 0.15}s ease-in-out;
+            `}
+          />
+        ))}
+      </div>
+    </div>
+
+    <p class="mt-6 text-[10px] uppercase tracking-[0.6em] text-rose-200/40 font-light italic">
+      Preparando la magia...
+    </p>
+  </div>
+</div>
+
+<section class="relative min-h-screen w-full flex flex-col items-center justify-between py-10 overflow-hidden bg-zinc-950">
   
-  <div class="absolute inset-0 bg-pink-100/50 z-0">
-    <div class="absolute inset-0 bg-gradient-to-b from-pink-50/20 to-pink-200/40 opacity-70"></div>
+  <div class="absolute inset-0 z-0 flex items-center justify-center">
+    <img 
+      src="/hero.jpeg" 
+      alt="Fondo Hero" 
+      class="h-full w-full object-contain opacity-60 scale-105" 
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90"></div>
   </div>
 
-  <div class="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 z-10 relative">
-    <p class="uppercase tracking-[0.3em] md:tracking-[0.4em] text-xs md:text-sm text-zinc-600/80">Mis Quince Años</p>
-    
-    <h1 class="text-6xl sm:text-7xl md:text-9xl font-display text-accent italic leading-none">Sofía</h1>
-    
-    <p class="text-lg md:text-xl font-light tracking-widest uppercase text-zinc-700">15 • 10 • 2026</p>
-    
-    <Heart class="mx-auto mt-6 md:mt-8 text-accent/50 fill-accent/15 size-5 md:size-6" />
+  <div class="absolute inset-0 z-5 pointer-events-none">
+    {[...Array(20)].map((_, i) => (
+      <div class={`sparkle sparkle-${i+1} absolute w-[2px] h-[2px] rounded-full opacity-0`} />
+    ))}
   </div>
+
+  <div class="z-10 px-6 text-center animate-reveal mt-16 relative">
+    <p class="uppercase tracking-[0.5em] text-[10px] text-rose-200/50 font-medium mb-2 relative z-10">
+      Te invito a mis 15 años
+    </p>
+    
+    <h1 class="text-7xl sm:text-8xl md:text-9xl font-anydore gold-text leading-[0.8] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] relative z-10 py-6">
+      Sofia Parra
+    </h1>
+  </div>
+
+  <div class="z-10 flex flex-col items-center gap-5 px-6 text-center animate-reveal delay-1000">
+    <button 
+      id="play-button"
+      class="group relative flex items-center justify-center w-16 h-16 bg-rose-100/10 backdrop-blur-md border border-rose-200/20 rounded-full transition-all hover:scale-110 active:scale-90 shadow-xl"
+    >
+      <div id="ping-effect" class="absolute inset-0 rounded-full bg-rose-300/30 animate-ping opacity-50"></div>
+      <Music class="size-7 text-rose-100 relative z-20 drop-shadow-md" />
+    </button>
+    
+    <p id="music-text" class="text-[9px] tracking-[0.3em] text-rose-100/40 uppercase font-light">
+      Música para tu entrada
+    </p>
+    
+    <audio id="bg-music" src="/music.mp3" loop></audio>
+  </div>
+
+  <div class="z-10 flex flex-col items-center gap-2 text-rose-100/20 animate-bounce mb-8">
+    <span class="text-[8px] uppercase tracking-[0.4em]">Desliza</span>
+    <ChevronDown class="size-5" />
+  </div>
+
 </section>
 
+<script>
+  // Preloader Logic
+  window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    setTimeout(() => {
+      if (preloader) {
+        preloader.style.opacity = '0';
+        setTimeout(() => preloader.style.display = 'none', 1000);
+      }
+    }, 3000);
+  });
+
+  // Music Logic
+  const button = document.getElementById('play-button');
+  const ping = document.getElementById('ping-effect');
+  const text = document.getElementById('music-text');
+  const audio = document.getElementById('bg-music') as HTMLAudioElement;
+
+  button?.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      button.classList.add('glow-active');
+      ping?.classList.add('hidden');
+      if(text) text.innerText = "Disfruta la música";
+    } else {
+      audio.pause();
+      button.classList.remove('glow-active');
+      ping?.classList.remove('hidden');
+      if(text) text.innerText = "Música en pausa";
+    }
+  });
+</script>
+
 <style>
-  /* Asegura que la fuente 'font-display' esté cargada si la usas */
-  /* Ejem: @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400..900&display=swap'); */
-  
-  .font-display {
-    font-family: 'Playfair Display', serif; /* O tu fuente elegante */
-    font-variant-ligatures: discretionary-ligatures;
+  /* CARGAMOS TU FUENTE ANYDORE LOCAL */
+  @font-face {
+    font-family: 'Anydore';
+    /* src: url('/fonts/anydore/anydore.otf') format('opentype'); */
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
   }
+
+  .font-anydore {
+    font-family: 'Anydore', cursive;
+  }
+
+  .gold-text {
+    background: linear-gradient(
+      to bottom,
+      #fff9c4 0%,
+      #fde047 20%,
+      #eab308 45%,
+      #ca8a04 70%,
+      #854d0e 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 1px rgba(253, 224, 71, 0.5));
+  }
+
+  /* Animación de Revelación */
+  .animate-reveal {
+    opacity: 0;
+    filter: blur(15px);
+    transform: scale(0.9) translateY(20px);
+    animation: revealIn 2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    animation-delay: 3.2s;
+  }
+
+  @keyframes revealIn {
+    to { opacity: 1; filter: blur(0); transform: scale(1) translateY(0); }
+  }
+
+  /* Animaciones del Preloader */
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin-slow { animation: spin-slow 6s linear infinite; }
+
+  @keyframes sparkle-float {
+    0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.8; }
+    50% { transform: scale(1.5) translate(5px, -5px); opacity: 1; filter: blur(1px); }
+  }
+
+  /* Estilo del botón al sonar */
+  .glow-active {
+    border-color: #fef08a;
+    box-shadow: 0 0 40px rgba(234, 179, 8, 0.4);
+    background: rgba(234, 179, 8, 0.1);
+  }
+
+  /* Sparkles ambientales */
+  .sparkle { animation: sparkle-anim linear infinite; }
+  .sparkle:nth-child(even) { background: #fbcfe8; box-shadow: 0 0 10px #fbcfe8; }
+  .sparkle:nth-child(odd) { background: #e9d5ff; box-shadow: 0 0 10px #e9d5ff; }
+
+  @keyframes sparkle-anim {
+    0% { opacity: 0; transform: translateY(0) scale(0); }
+    50% { opacity: 1; transform: translateY(-50px) scale(1.2); }
+    100% { opacity: 0; transform: translateY(-100px) scale(0); }
+  }
+
+  /* Generación de posiciones aleatorias para sparkles de fondo */
+  .sparkle-1 { top: 80%; left: 10%; animation-duration: 4s; }
+  .sparkle-2 { top: 70%; left: 80%; animation-duration: 5s; }
+  .sparkle-3 { top: 40%; left: 5%; animation-duration: 6s; }
+  .sparkle-4 { top: 20%; left: 85%; animation-duration: 3s; }
 </style>

@@ -5,14 +5,40 @@ const { title } = Astro.props;
 ---
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+        <title>{title}</title>
+    </head>
+    <body>
+        <slot />
+    </body>
 </html>
+
+<style is:global>
+    :root {
+        /* Colores Pastel */
+        --pastel-pink: #ffd1dc;
+        --pastel-purple: #e2d1f9;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        
+        /* Degradado Rosa y Lila Pastel */
+        background: linear-gradient(135deg, var(--pastel-pink) 0%, var(--pastel-purple) 100%);
+        background-attachment: fixed;
+        
+        font-family: 'Inter', sans-serif;
+        color: #4a4a4a; /* Un gris oscuro pero suave para no romper la estética pastel */
+    }
+
+</style>
