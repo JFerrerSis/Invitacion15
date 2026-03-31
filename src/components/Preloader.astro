@@ -1,26 +1,48 @@
 ---
 /* src/components/Preloader.astro */
 ---
-<div id="preloader" class="fixed inset-0 z-100 flex flex-col items-center justify-center bg-zinc-950 px-6">
+<div id="preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-zinc-950 px-6 overflow-hidden">
+  
+  <div id="pixie-dust" class="absolute inset-0 pointer-events-none"></div>
+
   <div class="relative flex flex-col items-center w-full max-w-4xl">
     
     <div class="overflow-hidden mb-8 text-center z-10">
-      <p id="preloader-text" class="text-3xl md:text-5xl text-pink-100 font-parisienne opacity-0 tracking-widest translate-y-full">
+      <p id="preloader-text" class="text-3xl md:text-6xl text-pink-100 font-parisienne opacity-0 tracking-widest translate-y-full drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
         Los 15 de Sofía
       </p>
-      <span id="loading-sub" class="block text-[15px] md:text-3xl  tracking-[0.8em] text-pink-200/40 mt-4 opacity-0">
-        Comienza la aventura
+      <span id="loading-sub" class="block text-[10px] md:text-xs tracking-[0.8em] uppercase text-pink-200/40 mt-4 opacity-0">
+        La magia comienza ahora
       </span>
     </div>
 
-    <div class="relative w-full max-w-lg aspect-square flex items-center justify-center">
+    <div class="relative w-full max-w-[280px] md:max-w-sm aspect-square flex items-center justify-center">
+      <svg class="absolute inset-0 w-full h-full -rotate-12 scale-150 pointer-events-none" viewBox="0 0 100 100">
+        <path 
+          id="magic-arc" 
+          d="M 5,80 A 45,45 0 0 1 95,80" 
+          fill="none" 
+          stroke="url(#arc-gradient)" 
+          stroke-width="0.5" 
+          stroke-linecap="round"
+          class="opacity-0"
+        />
+        <defs>
+          <linearGradient id="arc-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="transparent" />
+            <stop offset="50%" stop-color="#fef08a" />
+            <stop offset="100%" stop-color="transparent" />
+          </linearGradient>
+        </defs>
+      </svg>
+
       <img 
         id="castle-png"
         src="/castillo.png" 
         alt="Castillo" 
-        class="w-full h-full object-contain opacity-0 scale-90" 
+        class="w-full h-full object-contain opacity-0 scale-90 filter drop-shadow-[0_0_20px_rgba(251,113,133,0.3)]" 
       />
-      <div id="castle-glow" class="absolute inset-0 bg-white/5 rounded-full blur-[100px] opacity-0 scale-50"></div>
+      <div id="castle-glow" class="absolute inset-0 bg-white/10 rounded-full blur-[80px] opacity-0 scale-50"></div>
     </div>
   </div>
 </div>
@@ -28,44 +50,85 @@
 <script>
   import { gsap } from "gsap";
 
+  const createPixieDust = () => {
+    const container = document.getElementById('pixie-dust');
+    if (!container) return;
+    for (let i = 0; i < 30; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'absolute w-1 h-1 bg-white rounded-full opacity-0';
+      container.appendChild(dot);
+      gsap.set(dot, {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        scale: Math.random() * 1.5
+      });
+      gsap.to(dot, {
+        opacity: Math.random() * 0.6,
+        y: "-=100",
+        duration: 3 + Math.random() * 2,
+        repeat: -1,
+        ease: "none",
+        delay: Math.random() * 5
+      });
+    }
+  };
+
   const startLoader = () => {
     const preloader = document.getElementById('preloader');
     const castle = document.getElementById('castle-png');
     const title = document.getElementById('preloader-text');
     const subtitle = document.getElementById('loading-sub');
+    const arc = document.getElementById('magic-arc');
+    const glow = document.getElementById('castle-glow');
     const html = document.documentElement;
 
     if (!preloader) return;
 
-    // BLOQUEO INICIAL
     html.style.overflow = 'hidden';
-    window.scrollTo(0, 0); // Forzar arriba al recargar
+    createPixieDust();
 
     const tl = gsap.timeline();
 
-    tl.to(title, { opacity: 1, y: 0, duration: 1.2, ease: "power4.out" });
-    tl.to(subtitle, { opacity: 1, duration: 1 }, "-=0.8");
+    // 1. Aparece el texto con elegancia
+    tl.to(title, { opacity: 1, y: 0, duration: 1.5, ease: "power4.out" });
+    tl.to(subtitle, { opacity: 1, duration: 1, letterSpacing: "1em" }, "-=1");
     
-    tl.to(castle, { 
-      opacity: 1, 
-      scale: 1, 
-      duration: 2, 
-      ease: "power2.out" 
-    }, "-=1.2");
+    // 2. Revelado del castillo
+    tl.to(castle, { opacity: 1, scale: 1, duration: 2, ease: "expo.out" }, "-=0.5");
+    tl.to(glow, { opacity: 0.8, scale: 2, duration: 2, ease: "power2.inOut" }, "-=2");
 
+    // 3. Animación del Arco Mágico
+    tl.set(arc, { opacity: 1, strokeDasharray: 300, strokeDashoffset: 300 }, "-=1.5");
+    tl.to(arc, { 
+      strokeDashoffset: 0, 
+      duration: 2.5, 
+      ease: "power1.inOut" 
+    }, "-=1.5");
+
+    // 4. Desvanecimiento final con escala
     tl.to(preloader, {
       opacity: 0,
-      duration: 1,
-      delay: 1,
+      scale: 1.1,
+      duration: 1.2,
+      delay: 0.5,
+      ease: "power2.inOut",
       onComplete: () => {
         preloader.style.display = 'none';
-        html.style.overflow = ''; // LIBERAR SCROLL GLOBAL
+        html.style.overflow = '';
         window.dispatchEvent(new Event('preloaderFinished'));
       }
     });
   };
 
-  // Ejecutar tanto en carga inicial como en transiciones de Astro
   window.addEventListener('load', startLoader);
   document.addEventListener('astro:page-load', startLoader);
 </script>
+
+<style>
+  .font-parisienne {
+    font-family: 'Parisienne', cursive;
+  }
+  #pixie-dust div {
+    box-shadow: 0 0 5px #fff;
+  }
+</style>
