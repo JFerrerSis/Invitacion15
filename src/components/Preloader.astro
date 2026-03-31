@@ -1,7 +1,7 @@
 ---
 /* src/components/Preloader.astro */
 ---
-<div id="preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-zinc-950 px-6 overflow-hidden">
+<div id="preloader" class="fixed inset-0 z-100 flex flex-col items-center justify-center bg-zinc-950 px-6 overflow-hidden">
   
   <div id="pixie-dust" class="absolute inset-0 pointer-events-none"></div>
 
@@ -11,12 +11,12 @@
       <p id="preloader-text" class="text-3xl md:text-6xl text-pink-100 font-parisienne opacity-0 tracking-widest translate-y-full drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
         Los 15 de Sofía
       </p>
-      <span id="loading-sub" class="block text-[10px] md:text-xs tracking-[0.8em] uppercase text-pink-200/40 mt-4 opacity-0">
+      <span id="loading-sub" class="block text-[10px] md:text-xs tracking-[0.8em]  text-pink-200/40 mt-4 opacity-0">
         La magia comienza ahora
       </span>
     </div>
 
-    <div class="relative w-full max-w-[280px] md:max-w-sm aspect-square flex items-center justify-center">
+    <div class="relative w-full max-w-70 md:max-w-sm aspect-square flex items-center justify-center">
       <svg class="absolute inset-0 w-full h-full -rotate-12 scale-150 pointer-events-none" viewBox="0 0 100 100">
         <path 
           id="magic-arc" 
