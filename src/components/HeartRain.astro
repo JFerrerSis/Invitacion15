@@ -1,0 +1,107 @@
+---
+// src/components/HeartRain.astro
+---
+
+<div
+  id="heart-rain-wrapper"
+  class="fixed inset-0 pointer-events-none overflow-hidden"
+>
+  <div id="heart-rain-container" class="relative w-full h-full"></div>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+
+  const initHeartRain = () => {
+    const container = document.getElementById("heart-rain-container");
+    if (!container) return;
+
+    // 1. Limpiamos cualquier instancia previa para evitar duplicados al navegar
+    container.innerHTML = "";
+
+    // 2. Configuración de la lluvia
+    const heartCount = 30; // Cantidad para cubrir bien la pantalla
+    // MEJORA 1: Paleta de colores más oscuros y sólidos (Sustituyendo pastel por fucsia/rosa fuerte)
+    const colors = ["#d61f69", "#c2185b", "#ec4899", "#db2777"]; // Fucsias y rosas fuertes
+
+    // 3. Generar corazones
+    for (let i = 0; i < heartCount; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart-element";
+
+      // SVG del corazón con color aleatorio y opacidad más sólida
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      heart.innerHTML = `
+        <svg viewBox="0 0 24 24" style="fill: ${randomColor}; opacity: 0.8;">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      `;
+
+      container.appendChild(heart);
+
+      // 4. Función de animación recursiva (bucle infinito)
+      const animate = (el: HTMLElement, initialLoad = false) => {
+        const size = Math.random() * 20 + 10;
+        const startX = Math.random() * window.innerWidth;
+        
+        // MEJORA 2: Caída desde arriba (z-index)
+        const duration = Math.random() * 8 + 6; // Ligeramente más rápidos (entre 6 y 14 seg)
+        const startY = -150; // Empezar bien arriba, fuera de vista
+
+        // Estado inicial
+        gsap.set(el, {
+          x: startX,
+          // MEJORA 3: Lógica para la primera carga.
+          // Si es la carga inicial, algunos corazones se dispersan por la pantalla para simular que ya caían.
+          y: initialLoad ? (Math.random() * window.innerHeight * 0.8 + 100) : startY,
+          width: size,
+          height: size,
+          position: "absolute",
+          rotationZ: Math.random() * 360,
+          opacity: 0,
+          scale: 1,
+        });
+
+        // Animación de caída
+        gsap.to(el, {
+          y: window.innerHeight + 150, // Cae hasta abajo del todo
+          x: startX + (Math.random() * 300 - 150), // Balanceo lateral orgánico
+          rotationZ: `+=${Math.random() * 720}`, // Gira mientras cae
+          opacity: Math.random() * 0.7 + 0.4, // Brillo variable (más sólidos)
+          scale: 2, // Crece ligeramente
+          duration: duration,
+          ease: "none", // Velocidad constante de caída
+          // MEJORA 4: No hay delay en la caída inicial, sí en las repeticiones
+          delay: initialLoad ? 0 : Math.random() * 10,
+          onComplete: () => animate(el), // loop
+        });
+      };
+
+      // Disparamos la animación. Al ser la carga inicial, pasamos 'true'
+      // para que se dispersen por la pantalla inmediatamente.
+      animate(heart, true);
+    }
+  };
+
+  // 5. Manejo de eventos de Astro (soporte para View Transitions)
+  document.addEventListener("astro:page-load", initHeartRain);
+
+  // Fallback para carga inicial sin View Transitions activas
+  if (document.readyState === "complete") {
+    initHeartRain();
+  } else {
+    window.addEventListener("load", initHeartRain);
+  }
+</script>
+
+<style>
+  /* ESTILOS DEL COMPONENTE */
+  #heart-rain-wrapper {
+    z-index: 1; /* Capa por encima del fondo, por debajo del texto */
+  }
+
+  .heart-element {
+    filter: drop-shadow(0 0 5px rgba(251, 113, 133, 0.4)); /* Brillo suave */
+    will-change: transform; /* Optimización de rendimiento para animaciones complejas */
+  }
+</style>

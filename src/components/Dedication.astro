@@ -1,6 +1,6 @@
 <section class="relative py-20 px-6 overflow-hidden w-full text-center">
   
-  <div class="max-w-3xl mx-auto relative z-10">
+  <div class="max-w-3xl mx-auto relative z-20"> 
     
     <div class="mb-12 flex flex-col items-center gap-2 opacity-30">
       <div class="w-px h-16 bg-zinc-800"></div>
@@ -13,19 +13,41 @@
       </p>
     </div>
 
-    <div class="space-y-6 mb-20">
+    <div class="space-y-10 mb-16">
       <p class="text-zinc-800 text-2xl md:text-3xl leading-relaxed px-4">
-        "En las páginas de mi vida, ustedes son los protagonistas de los capítulos más bellos. Gracias, papás <span class="font-bold text-zinc-900">Hugo Parra</span> y <span class="font-bold text-zinc-900">Sorelis Villasmil</span>, por dedicar cada día a cuidar mi camino y por esforzarse tanto para que hoy mi realidad supere a cualquier fantasía."
+        "En las páginas de mi vida, ustedes son los protagonistas de los capítulos más bellos. Gracias, mis amados padres:"
       </p>
       
+      <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 py-4">
+        <span class="text-3xl md:text-4xl font-bold text-zinc-900 tracking-tight">Hugo Parra</span>
+        <div class="hidden md:block w-px h-8 bg-zinc-800/30"></div> 
+        <div class="block md:hidden w-12 h-px bg-zinc-800/30"></div> 
+        <span class="text-3xl md:text-4xl font-bold text-zinc-900 tracking-tight">Sorelis Villasmil</span>
+      </div>
+
       <p class="text-zinc-800 text-2xl md:text-3xl leading-relaxed px-4">
-        "Gracias por hacerme sentir la princesa de este cuento que hoy celebramos con toda el alma."
+        "Por dedicar cada día a cuidar mi camino y por esforzarse tanto para que hoy mi realidad supere a cualquier fantasía. Gracias por hacerme sentir la princesa de este cuento que hoy celebramos con toda el alma."
       </p>
+    </div>
+
+    <div class="mb-16 flex flex-col items-center py-8 gap-2 border-y border-zinc-800/10">
+      <h3 class="gold-text-small text-4xl md:text-6xl mb-6">Código de Vestimenta</h3>
+      <div class="flex items-center gap-6 text-zinc-800">
+        <div class="flex flex-col items-center">
+          <span class="text-2xl md:text-3xl font-light ">Caballeros</span>
+          <span class="text-zinc-500 text-2xl tracking-[0.3em] mt-2 text-[0.7rem] md:text-2xl">Traje Formal</span>
+        </div>
+        <div class="w-1.5 h-1.5 rotate-45 bg-zinc-400"></div>
+        <div class="flex flex-col items-center">
+          <span class="text-2xl md:text-3xl font-light tracking-wide">Damas</span>
+          <span class="text-zinc-500 text-2xl tracking-[0.3em] mt-2 text-[0.7rem] md:text-2xl">Vestido Formal</span>
+        </div>
+      </div>
     </div>
 
     <div class="flex flex-col items-center justify-center gap-2 py-8 border-y border-zinc-800/10">
       <span class="gold-text-small text-4xl md:text-6xl">Niños dulces sueños</span>
-      <p class="text-zinc-500 text-2xl tracking-[0.3em]  mt-2">
+      <p class="text-zinc-500 text-2xl tracking-[0.3em] mt-2 text-[0.7rem] md:text-2xl">
         Agradecemos tu comprensión
       </p>
     </div>
@@ -37,7 +59,7 @@
     </div>
   </div>
 
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none -z-10">
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.02] pointer-events-none z-0">
      <svg viewBox="0 0 100 100" class="w-125 h-125 fill-current text-zinc-900">
         <path d="M10 90 L10 40 L30 20 L50 40 L70 20 L90 40 L90 90 Z" />
      </svg>
@@ -46,7 +68,11 @@
 </section>
 
 <style>
-  /* Clase para el dorado pequeño (notificaciones) */
+  p, span, h3 {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
   .gold-text-small {
     background: linear-gradient(
       to bottom,
@@ -59,10 +85,5 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
-  }
-
-  .font-bold {
-    /* Resalte suave para nombres */
-    text-shadow: 0.3px 0px 0px rgba(0,0,0,0.1);
   }
 </style>
