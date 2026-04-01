@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import Preloader from "../components/Preloader.astro";
-import HeartRain from "../components/HeartRain.astro"; // <--- 1. IMPORTACIÓN
+import SparkleEffect from "../components/SparkleEffect.astro";
 interface Props {
   title: string;
 }
@@ -12,100 +12,155 @@ const { title } = Astro.props;
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <meta name="theme-color" content="#f3e8ff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <link rel="icon" type="image/svg+xml" href="/castillo.png" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap"
       rel="stylesheet"
     />
-
+    <meta name="theme-color" content="#f3e8ff" />
     <title>{title}</title>
   </head>
   <body
-    class="m-0 p-0 w-full min-h-screen bg-linear-to-br from-pastel-pink to-pastel-purple bg-fixed overflow-x-hidden relative"
+    class="m-0 p-0 w-full min-h-screen bg-linear-to-br from-pastel-pink to-pastel-purple bg-fixed relative"
   >
     <div
       class="fixed inset-0 bg-linear-to-br from-pastel-pink to-pastel-purple -z-10 bg-fixed"
     >
     </div>
 
-    <HeartRain />
-    <main class="relative w-full overflow-x-hidden">
-      <Preloader /><slot />
+    <SparkleEffect />
+
+    <main id="main-container" class="relative w-full">
+      <Preloader />
+      <slot />
     </main>
 
     <script>
       import { gsap } from "gsap";
       import { ScrollTrigger } from "gsap/ScrollTrigger";
+      import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-      gsap.registerPlugin(ScrollTrigger);
+      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-      const animateReveals = () => {
-        const elements = document.querySelectorAll(".reveal");
+      const initGSAPScroll = () => {
+        // 1. QUITAMOS normalizeScroll(true) que es lo que bloquea el touch en muchos móviles
+        // En su lugar, si quieres suavidad, usa una configuración ligera o simplemente deja el nativo.
 
-        elements.forEach((el) => {
+        const reveals = document.querySelectorAll(".reveal");
+        reveals.forEach((el) => {
           gsap.fromTo(
             el,
             {
               opacity: 0,
-              y: 40,
+              y: 40, // Bajamos un poco la intensidad del salto para que sea más fluido
               filter: "blur(10px)",
+              scale: 0.98,
             },
             {
               opacity: 1,
               y: 0,
               filter: "blur(0px)",
-              duration: 1.2,
+              scale: 1,
+              duration: 1,
               ease: "power2.out",
-              clearProps: "all", // Limpia los estilos de GSAP al terminar para evitar bugs de scroll
               scrollTrigger: {
                 trigger: el,
-                start: "top 85%",
-                toggleActions: "play none none none",
+                start: "top 90%",
+                end: "bottom 10%",
+                toggleActions: "play reverse play reverse",
               },
             },
           );
         });
+
+        const anchors =
+          document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
+        anchors.forEach((anchor) => {
+          anchor.addEventListener("click", (e) => {
+            e.preventDefault();
+            const target = anchor.getAttribute("href");
+            if (target) {
+              gsap.to(window, {
+                duration: 1.2,
+                scrollTo: { y: target, autoKill: true },
+                ease: "power3.inOut",
+              });
+            }
+          });
+        });
       };
 
-      document.addEventListener("astro:page-load", animateReveals);
-      window.addEventListener("load", animateReveals);
+      document.addEventListener("astro:page-load", initGSAPScroll);
+      if (document.readyState === "complete") {
+        initGSAPScroll();
+      } else {
+        window.addEventListener("load", initGSAPScroll);
+      }
     </script>
   </body>
 </html>
 
 <style is:global>
-  /* Reset ultra-estricto */
   :root {
-    overflow-x: hidden;
+    /* Forzamos el color de fondo a nivel raíz */
+    background-color: #f3e8ff; 
   }
 
-  html,
+  html {
+    /* Evita el salto blanco del notch y la barra de gestos */
+    height: -webkit-fill-available;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    /* Esto quita el rebote elástico que engrosa la barra */
+    overscroll-behavior-y: none; 
+  }
+
   body {
     margin: 0;
     padding: 0;
     width: 100%;
-    max-width: 100vw;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    /* Importante para que el scroll táctil sea nativo y no se trabe */
+    touch-action: pan-y; 
+    -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
-    /* Evita el rebote elástico en iOS que a veces muestra el fondo blanco */
-    overscroll-behavior-x: none;
+    /* El fondo debe estar aquí también por si acaso */
+    background: linear-gradient(180deg, #fce7f3 0%, #f3e8ff 100%) fixed;
   }
 
-  /* Aseguramos que las imágenes no rompan el layout */
-  img {
-    max-width: 100%;
-    height: auto;
+  main {
+    width: 100%;
+    position: relative;
+    /* Padding dinámico para que la raya de gestos flote sobre el diseño y no lo empuje */
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Aseguramos que el div del fondo ocupe TODO incluyendo la zona de la raya */
+  .fixed-background {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    /* Usamos bloque de color sólido abajo para que no haya blanco */
+    background-color: #f3e8ff; 
   }
 
   .reveal {
     opacity: 0;
-    /* Previene que el elemento ocupe espacio extra antes de la animación */
-    will-change: transform, opacity;
+    will-change: transform, opacity, filter;
   }
 </style>

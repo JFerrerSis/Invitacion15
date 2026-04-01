@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import Map from "../components/Map.astro"; // Este es el componente que acabamos de pulir
+import Map from "../components/Map.astro"; 
 import Countdown from "../components/Countdown.astro";
 import Dedication from '../components/Dedication.astro';
 import { MessageCircle } from "@lucide/astro";
@@ -9,8 +9,7 @@ import { MessageCircle } from "@lucide/astro";
 const datosEvento = {
   nombre: "Sofía Parra",
   direccion: "Hotel Jolie, AV Delicias con Calle 73",
-  mapaLink: "https://maps.app.goo.gl/9SkZnjy76xCRgPqx6?g_st=iw", // Asegúrate de que sea el link de EMBED
-  whatsapp: "5491122334455", 
+  whatsapp: "584129183138", 
 };
 
 const nombreCorto = datosEvento.nombre.split(" ")[0];
@@ -20,34 +19,35 @@ const mensajeConfirmacion = encodeURIComponent(`¡Hola! Confirmo mi asistencia a
 <Layout title={`Invitación de 15 - ${datosEvento.nombre}`}>
   <main class="relative min-h-screen overflow-hidden">
     
-    <section class="gsap-section w-full">
+    <section class="reveal w-full">
       <Hero />
     </section>
 
     <div class="relative z-10 w-full max-w-4xl mx-auto px-4 space-y-16 md:space-y-24">
       
-      <section class="gsap-section with-sparkle-burst">
+      <section class="reveal with-sparkle-burst">
         <Dedication />
       </section>
 
-      <section class="gsap-section with-sparkle-burst mt-8">
+      <section class="reveal with-sparkle-burst mt-8">
         <Countdown />
       </section>
 
       <div class="max-w-xl mx-auto border-t border-rose-200/30"></div>
 
-      <section class="gsap-section with-sparkle-burst">
+      <section class="reveal with-sparkle-burst">
         <Map address={datosEvento.direccion} />
       </section>
 
-      <section class="gsap-section with-sparkle-burst py-20 text-center space-y-8">
-        <h2 class="font-anydore text-5xl md:text-7xl text-zinc-800 drop-shadow-sm">¿Contamos contigo?</h2>
+      <section class="reveal with-sparkle-burst py-20 text-center space-y-8">
+        <h2 class="font-anydore text-5xl md:text-7xl text-zinc-800 drop-shadow-sm">
+          ¿Contamos contigo?
+        </h2>
 
-        
         <a 
           href={`https://wa.me/${datosEvento.whatsapp}?text=${mensajeConfirmacion}`}
           target="_blank"
-          class="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-5 rounded-full shadow-xl hover:shadow-[#25D366]/20 transition-all duration-500 font-bold transform hover:scale-105 active:scale-95 tracking-widest text-xs"
+          class="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-5 rounded-full shadow-xl hover:shadow-[#25D366]/20 transition-all duration-500 font-bold transform hover:scale-105 active:scale-95 tracking-widest text-xs uppercase"
         >
           <MessageCircle class="size-6" />
           Confirmar por WhatsApp
@@ -56,128 +56,29 @@ const mensajeConfirmacion = encodeURIComponent(`¡Hola! Confirmo mi asistencia a
 
     </div>
 
-<footer class="gsap-section py-24 relative overflow-hidden">
-  <div class="flex items-center justify-center gap-4 mb-10 opacity-30">
-    <div class="h-px w-12 bg-linear-to-r from-transparent to-rose-400"></div>
-    <div class="w-1 h-1 rounded-full bg-rose-400"></div>
-    <div class="h-px w-12 bg-linear-to-l from-transparent to-rose-400"></div>
-  </div>
+    <footer class="reveal py-24 relative overflow-hidden">
+      <div class="flex items-center justify-center gap-4 mb-10 opacity-30">
+        <div class="h-px w-12 bg-linear-to-r from-transparent to-rose-400"></div>
+        <div class="w-1 h-1 rounded-full bg-rose-400"></div>
+        <div class="h-px w-12 bg-linear-to-l from-transparent to-rose-400"></div>
+      </div>
 
-  <div class="container mx-auto px-6 text-center space-y-6">
-    <div class="space-y-1">
-      <p class="font-anydore text-2xl md:text-3xl text-zinc-800 drop-shadow-sm">
-        Hecho con amor para {nombreCorto}
-      </p>
-
-    </div>
-
-    <div class="pt-8 border-t border-zinc-950/5 max-w-xs mx-auto">
-      <a 
-        href="https://www.instagram.com/midnighttstudio/" 
-        target="_blank" 
-        class="group inline-flex flex-col items-center gap-2 no-underline"
-      >
-        <span class="text-[15px] tracking-[0.2em] text-zinc-400 group-hover:text-rose-400 transition-colors">
-          Desarrollado por
-        </span>
-        
-        <div class="flex items-center gap-2">
-          <div class="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></div>
-          <span class="font-bold tracking-widest text-2xl text-zinc-700 group-hover:text-zinc-950 transition-colors">
-            Midnight <span class="font-light text-zinc-400">Systems</span>
-          </span>
-          <div class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></div>
+      <div class="container mx-auto px-6 text-center space-y-6">
+        <div class="space-y-1">
+          <p class="font-anydore text-2xl md:text-3xl text-zinc-800 drop-shadow-sm">
+            Hecho con amor para {nombreCorto}
+          </p>
         </div>
-      </a>
-    </div>
+        <p class="text-[15px] text-zinc-400 italic opacity-60">
+          © 2026 • Todos los derechos reservados
+        </p>
+      </div>
 
-    <p class="text-[15px] text-zinc-400 italic opacity-60">
-      &copy; 2026 • Todos los derechos reservados
-    </p>
-  </div>
-
-  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-linear-to-t from-rose-100/30 to-transparent blur-3xl -z-10"></div>
-</footer>
-
-
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-linear-to-t from-rose-100/30 to-transparent blur-3xl -z-10"></div>
+    </footer>
 
   </main>
 </Layout>
-
-<script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const createSparkleBurst = (section: HTMLElement) => {
-    const burstCount = 15;
-    const colors = ['#fbcfe8', '#e9d5ff', '#ffffff', '#fef08a']; // Rosa, Lila, Blanco, Dorado
-
-    for (let i = 0; i < burstCount; i++) {
-      const sparkle = document.createElement('div');
-      sparkle.className = 'sparkle-burst';
-      
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      sparkle.style.backgroundColor = color;
-      sparkle.style.boxShadow = `0 0 12px ${color}`;
-
-      const xStart = Math.random() * section.offsetWidth;
-      const yStart = Math.random() * section.offsetHeight;
-      
-      sparkle.style.left = `${xStart}px`;
-      sparkle.style.top = `${yStart}px`;
-
-      section.appendChild(sparkle);
-
-      gsap.to(sparkle, {
-        opacity: 0,
-        x: (Math.random() - 0.5) * 300,
-        y: (Math.random() - 0.5) * 300,
-        scale: Math.random() * 2.5,
-        duration: 2 + Math.random(),
-        ease: "power3.out",
-        onComplete: () => sparkle.remove()
-      });
-    }
-  };
-
-  const initAnimations = () => {
-    const sections = document.querySelectorAll<HTMLElement>('.gsap-section');
-
-    sections.forEach((section) => {
-      gsap.fromTo(section, 
-        { 
-          opacity: 0, 
-          y: 40, 
-          filter: "blur(8px)" 
-        }, 
-        {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          duration: 1.5,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-            onEnter: () => {
-              if (section.classList.contains('with-sparkle-burst')) {
-                createSparkleBurst(section);
-              }
-            }
-          }
-        }
-      );
-    });
-  };
-
-  document.addEventListener('astro:page-load', initAnimations);
-  if (!window.location.hash) {
-      window.addEventListener('load', initAnimations);
-  }
-</script>
 
 <style>
   @reference "tailwindcss";
@@ -193,17 +94,10 @@ const mensajeConfirmacion = encodeURIComponent(`¡Hola! Confirmo mi asistencia a
     font-family: 'Anydore', 'Parisienne', cursive;
   }
 
-  .gsap-section {
-    opacity: 0; 
-    will-change: transform, opacity, filter;
-  }
-
-  :global(.sparkle-burst) {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 50;
+  /* Las clases .reveal ahora están controladas por el Layout, 
+     pero mantenemos la opacidad inicial para evitar el flash de contenido (FOUC)
+  */
+  .reveal {
+    opacity: 0;
   }
 </style>

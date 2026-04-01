@@ -1,0 +1,142 @@
+---
+// src/components/SparkleEffect.astro
+---
+
+<div
+  id="sparkle-wrapper"
+  class="fixed inset-0 pointer-events-none overflow-hidden"
+>
+  <div id="sparkle-container" class="relative w-full h-full"></div>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+
+  let sparkleElements: HTMLElement[] = []; // Para guardar referencia a los elementos
+
+  const initSparkleEffect = () => {
+    const container = document.getElementById("sparkle-container");
+    if (!container) return;
+
+    container.innerHTML = "";
+    sparkleElements = []; // Resetear array
+
+    const sparkleCount = 60; // Un poco más para compensar el movimiento
+    // MEJORA 1: Colores Rosados
+    const colors = ["#FF69B4", "#FF1493", "#FFB6C1", "#FFC0CB", "#E066FF"];
+
+    for (let i = 0; i < sparkleCount; i++) {
+      const sparkle = document.createElement("div");
+      sparkle.className = "sparkle-element";
+
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      sparkle.innerHTML = `
+        <svg viewBox="0 0 24 24" style="fill: ${randomColor};">
+          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+        </svg>
+      `;
+
+      container.appendChild(sparkle);
+      sparkleElements.push(sparkle); // Guardar referencia
+
+      // Animación de parpadeo (igual que antes)
+      const animateSparkle = (el: HTMLElement) => {
+        const size = Math.random() * 12 + 6; 
+        const randomX = Math.random() * window.innerWidth;
+        const randomY = Math.random() * window.innerHeight;
+        
+        const duration = Math.random() * 2 + 1; 
+        const delay = Math.random() * 7; 
+
+        gsap.set(el, {
+          x: randomX,
+          y: randomY,
+          width: size,
+          height: size,
+          position: "absolute",
+          opacity: 0,
+          scale: 0,
+          rotationZ: Math.random() * 180,
+          // Guardamos un factor de parallax aleatorio en el propio elemento para usarlo luego
+          // Un valor bajo (<1) para que se mueva más lento que el scroll
+          data: { parallaxFactor: Math.random() * 0.15 + 0.05 } 
+        });
+
+        const tl = gsap.timeline({
+          delay: delay,
+          onComplete: () => animateSparkle(el)
+        });
+
+        tl.to(el, {
+          opacity: Math.random() * 0.6 + 0.4, 
+          scale: 1,
+          rotationZ: "+=120",
+          duration: duration * 0.4,
+          ease: "back.out(1.5)",
+        })
+        .to(el, {
+          opacity: 0,
+          scale: 0,
+          rotationZ: "+=120",
+          duration: duration * 0.6,
+          ease: "power2.in",
+          delay: Math.random() * 0.8,
+        });
+      };
+
+      animateSparkle(sparkle);
+    }
+
+    // --- MEJORA 2: EFECTO PARALLAX AL SCROLL ---
+    
+    // quickTo es más eficiente para animaciones que ocurren muy seguido (como scroll)
+    const ySetters = sparkleElements.map(el => gsap.quickTo(el, "y", { duration: 0.3, ease: "power1.out" }));
+
+    function handleScroll() {
+      const scrollY = window.scrollY;
+
+      sparkleElements.forEach((el, index) => {
+        const factor = (el as any).gsap.getProperty("data").parallaxFactor;
+        // Obtenemos la posición Y base que le dio GSAP
+        const baseY = (el as any)._gsap.y; 
+        
+        // Calculamos el offset del parallax. Restamos para que se mueva hacia arriba al bajar scroll.
+        const offsetY = scrollY * factor;
+        
+        // Usamos quickTo para actualizar la posición Y suavizada
+        ySetters[index](baseY - offsetY);
+      });
+    }
+
+    // Escuchamos el scroll con passive: true para mejor rendimiento
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // Limpieza al desmontar (importante para View Transitions)
+    return () => {
+        window.removeEventListener("scroll", handleScroll);
+    };
+  };
+
+  // Manejo de eventos de Astro
+  document.addEventListener("astro:page-load", initSparkleEffect);
+
+  // Fallback para carga inicial
+  if (document.readyState === "complete") {
+    initSparkleEffect();
+  } else {
+    window.addEventListener("load", initSparkleEffect);
+  }
+</script>
+
+<style>
+  /* ESTILOS DEL COMPONENTE */
+  #sparkle-wrapper {
+    z-index: 1; /* Por detrás del contenido principal, por encima del fondo */
+  }
+
+  .sparkle-element {
+    /* MEJORA 1b: Brillo (glow) Rosado */
+    filter: drop-shadow(0 0 6px rgba(255, 105, 180, 0.9));
+    will-change: transform, opacity; /* Optimización crírtica para parallax */
+  }
+</style>

@@ -1,19 +1,23 @@
+---
+import { Shirt, Baby, Mail } from "lucide-astro";
+---
+
 <section class="relative py-20 px-6 overflow-hidden w-full text-center">
   
   <div class="max-w-3xl mx-auto relative z-20"> 
     
-    <div class="mb-12 flex flex-col items-center gap-2 opacity-30">
+    <div class="mb-12 flex flex-col items-center gap-2 opacity-30 reveal">
       <div class="w-px h-16 bg-zinc-800"></div>
       <div class="w-2 h-2 rounded-full border border-zinc-800"></div>
     </div>
 
-    <div class="mb-16">
+    <div class="mb-16 reveal">
       <p class="text-zinc-800 text-2xl md:text-3xl leading-relaxed px-4 italic">
         "Parece que fue ayer cuando los juegos y las risas llenaban cada rincón, y hoy, casi sin darme cuenta, me encuentro frente al inicio de una nueva y hermosa etapa. Quiero que seas parte del día en que mis sueños de niña comienzan a pintarse con los colores de la juventud. No sería lo mismo sin tu presencia, porque has sido parte de mi historia."
       </p>
     </div>
 
-    <div class="space-y-10 mb-16">
+    <div class="space-y-10 mb-20 reveal">
       <p class="text-zinc-800 text-2xl md:text-3xl leading-relaxed px-4">
         "En las páginas de mi vida, ustedes son los protagonistas de los capítulos más bellos. Gracias, mis amados padres:"
       </p>
@@ -30,29 +34,45 @@
       </p>
     </div>
 
-    <div class="mb-16 flex flex-col items-center py-8 gap-2 border-y border-zinc-800/10">
-      <h3 class="gold-text-small text-4xl md:text-6xl mb-6">Código de Vestimenta</h3>
+    <div class="reveal mb-16 flex flex-col items-center py-12 gap-4 border-y border-zinc-800/10">
+      <div class="opacity-60 mb-2">
+        <Shirt class="size-10 text-zinc-800" stroke-width={1} />
+      </div>
+      <h3 class="gold-text-small text-4xl md:text-6xl mb-4 font-anydore">Código de Vestimenta</h3>
       <div class="flex items-center gap-6 text-zinc-800">
         <div class="flex flex-col items-center">
-          <span class="text-2xl md:text-3xl font-light ">Caballeros</span>
-          <span class="text-zinc-500 text-2xl tracking-[0.3em] mt-2 text-[0.7rem] md:text-2xl">Traje Formal</span>
+          <span class="text-2xl md:text-3xl font-light">Caballeros</span>
+          <span class="text-zinc-500 tracking-[0.3em] mt-2 text-xl md:text-xl ">Traje Formal</span>
         </div>
         <div class="w-1.5 h-1.5 rotate-45 bg-zinc-400"></div>
         <div class="flex flex-col items-center">
           <span class="text-2xl md:text-3xl font-light tracking-wide">Damas</span>
-          <span class="text-zinc-500 text-2xl tracking-[0.3em] mt-2 text-[0.7rem] md:text-2xl">Vestido Formal</span>
+          <span class="text-zinc-500 tracking-[0.3em] mt-2 text-xl md:text-xl ">Vestido Formal</span>
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col items-center justify-center gap-2 py-8 border-y border-zinc-800/10">
-      <span class="gold-text-small text-4xl md:text-6xl">Niños dulces sueños</span>
-      <p class="text-zinc-500 text-2xl tracking-[0.3em] mt-2 text-[0.7rem] md:text-2xl">
-        Agradecemos tu comprensión
+    <div class="reveal mb-16 flex flex-col items-center justify-center gap-4 py-12 border-b border-zinc-800/10">
+      <div class="opacity-60 mb-2">
+        <Baby class="size-10 text-zinc-800" stroke-width={1} />
+      </div>
+      <span class="gold-text-small text-4xl md:text-6xl font-anydore">Niños dulces sueños</span>
+      <p class="text-zinc-500 tracking-[0.2em] mt-2 text-xl md:text-xl  italic px-6">
+        "Agradecemos tu comprensión, esta será una recepción solo para adultos."
       </p>
     </div>
 
-    <div class="mt-20 flex justify-center gap-4 opacity-20">
+    <div class="reveal flex flex-col items-center justify-center gap-6 py-12">
+      <div class="opacity-60 mb-2">
+        <Mail class="size-10 text-zinc-800" stroke-width={1} />
+      </div>
+      <h3 class="gold-text-small text-4xl md:text-6xl font-anydore">Lluvia de Sobres</h3>
+      <p class="text-zinc-800 text-xl md:text-2xl leading-relaxed max-w-md mx-auto italic px-4">
+        "Si me quieres obsequiar algo más que tu presencia, por favor que sea en Lluvia de Sobres."
+      </p>
+    </div>
+
+    <div class="mt-20 flex justify-center gap-4 opacity-20 reveal">
       {[...Array(3)].map((_) => (
         <div class="w-1.5 h-1.5 rotate-45 bg-zinc-900"></div>
       ))}
@@ -68,11 +88,6 @@
 </section>
 
 <style>
-  p, span, h3 {
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
   .gold-text-small {
     background: linear-gradient(
       to bottom,
@@ -85,5 +100,9 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
+  }
+  
+  .font-anydore {
+    font-family: 'Anydore', 'Parisienne', cursive;
   }
 </style>
